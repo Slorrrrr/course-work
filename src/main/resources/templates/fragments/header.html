@@ -1,19 +1,31 @@
-<!-- fragments/header.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
 <body>
-<div th:fragment="main-header">
-    <header>
-        <h1>Добро пожаловать в Книжный магазин</h1>
-        <nav>
-            <a th:href="@{/books}">Книги</a> |
-            <a th:href="@{/stores}">Магазины</a> |
-            <a th:href="@{/orders}">Заказы</a> |
-            <a th:href="@{/about}">О сайте</a> |
-            <a th:href="@{/login}">Вход</a>
-        </nav>
-    </header>
-</div>
-</body>
-</html>
+<header th:fragment="main-header">
+    <nav class="navbar">
+        <div class="logo">
+            <a th:href="@{/}">📚 BookStore</a>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/books}"><i class="fas fa-book"></i> Книги</a>
+            <a th:href="@{/stores}"><i class="fas fa-store"></i> Магазины</a>
+            <a th:href="@{/orders}"><i class="fas fa-shopping-cart"></i> Заказы</a>
+            <a th:href="@{/users}"><i class="fas fa-users"></i> Пользователи</a>
+            <a th:href="@{/about}"><i class="fas fa-info-circle"></i> О нас</a>
+            <div class="auth-section">
+                <a th:href="@{/login}" th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <i class="fas fa-sign-in-alt"></i> Вход
+                </a>
+                <a th:href="@{/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <i class="fas fa-sign-out-alt"></i> Выход
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
