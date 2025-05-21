@@ -26,7 +26,6 @@ public class UserService {
     public void registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        user.setRole("USER");   // <-- Вот это добавь
         userRepository.save(user);
     }
 
