@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity"
+      lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Список книг</title>
@@ -7,12 +9,11 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: main-header"></div>
-
 <h2>Список книг</h2>
 
 <a th:href="@{/}" class="btn">Главная</a>
-<a th:href="@{/books/add}" class="btn">Добавить книгу</a>
+<a th:href="@{/books/add}" class="btn"
+   sec:authorize="hasRole('ADMIN')">Добавить книгу</a>
 
 <table border="1">
     <thead>
@@ -23,7 +24,7 @@
         <th>Цена</th>
         <th>На складе</th>
         <th>Магазины</th>
-        <th>Действия</th>
+        <th sec:authorize="hasRole('ADMIN')">Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -38,11 +39,12 @@
                 <span th:text="${store.name}"></span><span th:if="${!stStat.last}">, </span>
             </span>
         </td>
-        <td>
+        <td sec:authorize="hasRole('ADMIN')">
             <a th:href="@{|/books/edit/${book.id}|}">Редактировать</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>
