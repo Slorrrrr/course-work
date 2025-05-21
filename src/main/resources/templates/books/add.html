@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Добавить книгу</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<div th:replace="fragments/header :: main-header"></div>
+
+<h2>Добавить книгу</h2>
+
+<form th:action="@{/books/add}" th:object="${book}" method="post">
+    <div>
+        <label>Название:</label>
+        <input type="text" th:field="*{title}" required />
+    </div>
+    <div>
+        <label>Автор:</label>
+        <input type="text" th:field="*{author}" />
+    </div>
+    <div>
+        <label>Категория:</label>
+        <input type="text" th:field="*{category}" />
+    </div>
+    <div>
+        <label>Цена:</label>
+        <input type="number" step="0.01" th:field="*{price}" required />
+    </div>
+    <div>
+        <label>Количество на складе:</label>
+        <input type="number" th:field="*{stock}" min="0" required />
+    </div>
+    <div>
+        <label>Магазины:</label>
+        <select name="storeIds" multiple="multiple" size="5">
+            <option th:each="store : ${stores}"
+                    th:value="${store.id}"
+                    th:text="${store.name}">
+            </option>
+        </select>
+    </div>
+    <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/books}">Назад к списку книг</a>
+</body>
+</html>

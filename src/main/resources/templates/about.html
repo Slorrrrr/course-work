@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>О сайте - Книжный магазин</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        /* Основной стиль страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #5a6268; /* Синий фон для шапки */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: white; /* Белый цвет для заголовка */
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: text-decoration 0.3s ease;
+        }
+
+        /* Подчеркивание при наведении */
+        nav a:hover {
+            text-decoration: underline; /* Добавляем подчеркивание */
+        }
+
+        main {
+            padding: 30px;
+            text-align: center;
+        }
+
+        main p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #343a40; /* Более темный текст для читаемости */
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>О нашем книжном магазине</h1>
+    <nav>
+        <a th:href="@{/}">Главная</a> |
+        <a th:href="@{/books}">Книги</a> |
+        <a th:href="@{/stores}">Магазины</a> |
+        <a th:href="@{/orders}">Заказы</a> |
+        <a th:href="@{/login}">Вход</a>
+    </nav>
+</header>
+
+<main>
+    <p>Это учебный проект информационно-справочной системы книжного магазина с базовой регистрацией и функционалом.</p>
+</main>
+
+</body>
+</html>

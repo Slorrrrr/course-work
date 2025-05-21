@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Магазины</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<h2>Магазины</h2>
+<a th:href="@{/home}" class="btn">Главная</a>
+<a th:href="@{/stores/add}" class="btn">Добавить магазин</a>
+<table border="1">
+    <thead><tr><th>Название</th><th>Адрес</th><th>Телефон</th><th>Действия</th></tr></thead>
+    <tbody>
+    <tr th:each="store : ${stores}">
+        <td th:text="${store.name}"></td>
+        <td th:text="${store.address}"></td>
+        <td th:text="${store.phone}"></td>
+        <td>
+            <a th:href="@{|/stores/edit/${store.id}|}">Редактировать</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

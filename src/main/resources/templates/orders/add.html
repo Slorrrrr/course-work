@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Создать заказ</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<h2>Создать заказ</h2>
+<form th:action="@{/orders/add}" th:object="${order}" method="post">
+    <div>
+        <label>Пользователь:</label>
+        <select th:field="*{user.id}">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Книга:</label>
+        <select th:field="*{book.id}">
+            <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Количество:</label>
+        <input type="number" th:field="*{quantity}" min="1" class="input-field" required />
+    </div>
+    <button type="submit">Создать</button>
+</form>
+<a th:href="@{/orders}">Назад к списку заказов</a>
+</body>
+</html>

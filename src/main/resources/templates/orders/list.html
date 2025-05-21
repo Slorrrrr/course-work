@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Заказы</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<h2>Заказы</h2>
+
+<a th:href="@{/home}" class="btn">Главная</a>
+<a th:href="@{/orders/add}" class="btn">Добавить заказ</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Пользователь</th>
+        <th>Книга</th>
+        <th>Количество</th>
+        <th>Дата заказа</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.user != null ? order.user.username : '–'}"></td>
+        <td th:text="${order.book != null ? order.book.title : '–'}"></td>
+        <td th:text="${order.quantity}"></td>
+        <td th:text="${order.orderDateString}"></td>
+        <td th:text="${order.status}"></td>
+        <td><a th:href="@{|/orders/edit/${order.id}|}">Редактировать</a></td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>

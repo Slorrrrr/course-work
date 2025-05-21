@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Главная - Книжный магазин</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        /* Основной стиль страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #5a6268;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: white; /* Белый цвет для заголовка */
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: text-decoration 0.3s ease;
+        }
+
+        /* Подчеркивание при наведении */
+        nav a:hover {
+            text-decoration: underline; /* Добавляем подчеркивание */
+        }
+
+        main {
+            padding: 30px;
+            text-align: center;
+        }
+
+        main p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            color: black; /* Оставляем черный текст для основного описания */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Добро пожаловать в Книжный магазин</h1>
+    <nav>
+        <a th:href="@{/books}">Книги</a> |
+        <a th:href="@{/stores}">Магазины</a> |
+        <a th:href="@{/orders}">Заказы</a> |
+        <a th:href="@{/about}">О сайте</a> |
+        <a th:href="@{/login}">Вход</a>
+    </nav>
+</header>
+
+<main>
+    <p>Здесь вы можете просматривать и заказывать книги, регистрироваться и пользоваться личным кабинетом.</p>
+</main>
+
+</body>
+</html>
