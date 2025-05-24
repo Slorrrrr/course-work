@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
+
+<div th:replace="~{fragments/header :: main-header}"></div>
+
 <h2>Добавить магазин</h2>
 <form th:action="@{/stores/add}" th:object="${store}" method="post">
     <div>

@@ -7,6 +7,9 @@
 </head>
 
 <body>
+
+<div th:replace="~{fragments/header :: main-header}"></div>
+
 <h2>Создать заказ</h2>
 <form th:action="@{/orders/add}" th:object="${order}" method="post">
     <div>

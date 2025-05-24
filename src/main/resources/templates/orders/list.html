@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
+
+<div th:replace="~{fragments/header :: main-header}"></div>
+
 <h2 sec:authorize="hasRole('USER')">Ваши заказы</h2>
 <h2 sec:authorize="hasRole('ADMIN')">Заказы всех пользователей</h2>
 

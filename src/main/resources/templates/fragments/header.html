@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
 <header th:fragment="main-header">
-    <nav class="navbar">
-        <div class="logo">
-            <a th:href="@{/}">📚 BookStore</a>
+    <nav class="navbar" style="padding: 1.3rem 1.2rem; display:flex; align-items:center;">
+        <div class="logo" style="font-weight: 700; font-size: 1.5rem; color: #cbd5e1; letter-spacing: 2px;">
+            <a th:href="@{/}" style="color: #cbd5e1; text-decoration: none;">📚 BookStore</a>
         </div>
-        <div class="nav-links">
-            <a th:href="@{/books}"><i class="fas fa-book"></i> Книги</a>
-            <a th:href="@{/stores}"><i class="fas fa-store"></i> Магазины</a>
-            <a th:href="@{/orders}"><i class="fas fa-shopping-cart"></i> Заказы</a>
-            <a th:href="@{/users}"><i class="fas fa-users"></i> Пользователи</a>
-            <a th:href="@{/about}"><i class="fas fa-info-circle"></i> О нас</a>
-            <div class="auth-section">
-                <a th:href="@{/login}" th:if="${#authorization.expression('!isAuthenticated()')}">
+        <div class="nav-links" style="display:flex; align-items:center; gap:0.1rem; margin-left: auto;">
+            <a th:href="@{/books}" style="font-weight:600; font-size:1rem; color:#cbd5e1; text-decoration:none; padding:0.25rem 0.4rem; border-radius:5px;">
+                <i class="fas fa-book"></i> Книги
+            </a>
+            <a th:href="@{/stores}" style="font-weight:600; font-size:1rem; color:#cbd5e1; text-decoration:none; padding:0.25rem 0.4rem; border-radius:5px;">
+                <i class="fas fa-store"></i> Магазины
+            </a>
+            <a th:href="@{/orders}" style="font-weight:600; font-size:1rem; color:#cbd5e1; text-decoration:none; padding:0.25rem 0.4rem; border-radius:5px;">
+                <i class="fas fa-shopping-cart"></i> Заказы
+            </a>
+            <a th:href="@{/about}" style="font-weight:600; font-size:1rem; color:#cbd5e1; text-decoration:none; padding:0.25rem 0.4rem; border-radius:5px;">
+                <i class="fas fa-info-circle"></i> О нас
+            </a>
+            <div class="auth-section" style="margin-left:auto; display:flex; align-items:center; gap:0.1rem; padding:0.25rem 0;">
+                <a th:href="@{/login}" th:if="${#authorization.expression('!isAuthenticated()')}"
+                   style="font-weight:600; color:#cbd5e1; text-decoration:none; padding: 0.25rem 0.5rem;">
                     <i class="fas fa-sign-in-alt"></i> Вход
                 </a>
-                <a th:href="@{/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                <a th:href="@{/login}" th:if="${#authorization.expression('isAuthenticated()')}"
+                   style="font-weight:600; color:#cbd5e1; text-decoration:none; padding: 0.25rem 0.5rem;">
                     <i class="fas fa-sign-out-alt"></i> Выход
                 </a>
             </div>
