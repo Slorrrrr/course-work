@@ -9,7 +9,9 @@
 <h2>Заказы</h2>
 
 <a th:href="@{/home}" class="btn">Главная</a>
-<a th:href="@{/orders/add}" class="btn">Добавить заказ</a>
+
+<!-- Кнопка добавления доступна только для администраторов -->
+<a th:href="@{/orders/add}" class="btn" sec:authorize="hasRole('ADMIN')">Добавить заказ</a>
 
 <table>
     <thead>
@@ -23,15 +25,18 @@
     </tr>
     </thead>
     <tbody>
+    <!-- Выводим заказы для всех пользователей, но только те, которые доступны этому пользователю -->
     <tr th:each="order : ${orders}">
         <td th:text="${order.user != null ? order.user.username : '–'}"></td>
         <td th:text="${order.book != null ? order.book.title : '–'}"></td>
         <td th:text="${order.quantity}"></td>
         <td th:text="${order.orderDateString}"></td>
         <td th:text="${order.status}"></td>
-        <td><a th:href="@{|/orders/edit/${order.id}|}">Редактировать</a></td>
+        <td>
+            <!-- Кнопка редактирования доступна только администраторам -->
+            <a th:href="@{|/orders/edit/${order.id}|}" sec:authorize="hasRole('ADMIN')">Редактировать</a>
+        </td>
     </tr>
-
     </tbody>
 </table>
 </body>
