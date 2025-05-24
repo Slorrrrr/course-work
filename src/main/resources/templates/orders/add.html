@@ -5,6 +5,7 @@
     <title>Создать заказ</title>
     <link rel="stylesheet" href="/css/styles.css" />
 </head>
+
 <body>
 <h2>Создать заказ</h2>
 <form th:action="@{/orders/add}" th:object="${order}" method="post">
@@ -25,6 +26,12 @@
         <input type="number" th:field="*{quantity}" min="1" class="input-field" required />
     </div>
     <button type="submit">Создать</button>
+
+    <div th:if="${error}" class="error-message">
+
+        <p th:text="${error}"></p>
+    </div>
+
 </form>
 <a th:href="@{/orders}">Назад к списку заказов</a>
 </body>

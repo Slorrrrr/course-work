@@ -244,3 +244,17 @@ select.input-field:focus {
     border-color: #007BFF; /* Синий при фокусе */
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+
+.error-message {
+    display: block;                /* занимает всю строку, но будет перенос */
+    width: fit-content;            /* ширина по содержимому */
+    padding: 10px 10px;
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 4px;
+    font-weight: 600;
+    margin: 10px 0 20px 0;        /* отступ сверху 10px, снизу 20px */
+    box-shadow: 0 2px 4px rgba(255, 0, 0, 0.1);
+}
+

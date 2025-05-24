@@ -55,16 +55,38 @@ public class OrderController {
 
 
     @GetMapping("/add")
-    public String showAddForm(Model model) {
+    public String showAddForm(Model model, Authentication authentication) {
         model.addAttribute("order", new Order());
         model.addAttribute("books", bookService.getAllBooks());
-        model.addAttribute("users", userService.getAllUsers());
+
+        boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        List<User> users;
+        if (isAdmin) {
+            users = userService.getAllUsers();  // все пользователи для админа
+        } else {
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            User currentUser = customUserDetails.getUser();
+            users = List.of(currentUser);  // только текущий пользователь для обычного юзера
+        }
+        model.addAttribute("users", users);
+
         return "orders/add";
     }
 
+
     @PostMapping("/add")
-    public String addOrder(@ModelAttribute Order order) {
-        orderService.saveOrder(order);
+    public String addOrder(@ModelAttribute Order order, Model model) {
+        boolean success = orderService.saveOrderWithStockCheck(order);
+        if (!success) {
+            model.addAttribute("error", "Недостаточно книг на складе для данного заказа");
+            // Нужно заново подгрузить книги и пользователей, чтобы форма отобразилась корректно
+            model.addAttribute("order", order);
+            model.addAttribute("books", bookService.getAllBooks());
+            model.addAttribute("users", List.of(order.getUser())); // или подгрузи согласно роли, как в showAddForm
+            return "orders/add"; // Возврат на форму с ошибкой
+        }
         return "redirect:/orders";
     }
 

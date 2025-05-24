@@ -11,8 +11,7 @@
 
 <a th:href="@{/home}" class="btn">Главная</a>
 
-<!-- Кнопка добавления доступна только для администраторов -->
-<a th:href="@{/orders/add}" class="btn" sec:authorize="hasRole('ADMIN')">Добавить заказ</a>
+<a th:href="@{/orders/add}" class="btn">Оформить заказ</a>
 
 <table>
     <thead>
@@ -22,7 +21,7 @@
         <th>Количество</th>
         <th>Дата заказа</th>
         <th>Статус</th>
-        <th>Действия</th>
+        <th sec:authorize="hasRole('ADMIN')">Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -33,8 +32,8 @@
         <td th:text="${order.quantity}"></td>
         <td th:text="${order.orderDateString}"></td>
         <td th:text="${order.status}"></td>
-        <td>
-            <a th:href="@{|/orders/edit/${order.id}|}" sec:authorize="hasRole('ADMIN')">Редактировать</a>
+        <td sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{|/orders/edit/${order.id}|}">Редактировать</a>
         </td>
     </tr>
     </tbody>
