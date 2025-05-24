@@ -1,9 +1,9 @@
-package com.fireservice.controller;
+package com.bookshop.controller;
 
-import com.fireservice.model.Book;
-import com.fireservice.model.Store;
-import com.fireservice.service.BookService;
-import com.fireservice.service.StoreService;
+import com.bookshop.model.Book;
+import com.bookshop.model.Store;
+import com.bookshop.service.BookService;
+import com.bookshop.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

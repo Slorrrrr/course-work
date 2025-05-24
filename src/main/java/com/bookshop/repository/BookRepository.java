@@ -1,6 +1,6 @@
-package com.fireservice.repository;
+package com.bookshop.repository;
 
-import com.fireservice.model.Book;
+import com.bookshop.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.fireservice.controller;
+package com.bookshop.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

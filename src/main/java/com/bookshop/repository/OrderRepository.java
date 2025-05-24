@@ -1,8 +1,7 @@
-package com.fireservice.repository;
+package com.bookshop.repository;
 
-import com.fireservice.model.Order;
+import com.bookshop.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

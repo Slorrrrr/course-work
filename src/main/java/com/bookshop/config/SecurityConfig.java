@@ -1,6 +1,6 @@
-package com.fireservice.config;
+package com.bookshop.config;
 
-import com.fireservice.service.UserDetailsServiceImpl;
+import com.bookshop.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

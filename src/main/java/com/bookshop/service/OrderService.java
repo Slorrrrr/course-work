@@ -1,7 +1,7 @@
-package com.fireservice.service;
+package com.bookshop.service;
 
-import com.fireservice.model.Order;
-import com.fireservice.repository.OrderRepository;
+import com.bookshop.model.Order;
+import com.bookshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

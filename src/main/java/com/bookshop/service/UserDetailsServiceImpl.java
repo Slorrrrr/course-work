@@ -1,7 +1,7 @@
-package com.fireservice.service;
+package com.bookshop.service;
 
-import com.fireservice.model.User;
-import com.fireservice.repository.UserRepository;
+import com.bookshop.model.User;
+import com.bookshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

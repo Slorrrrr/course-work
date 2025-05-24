@@ -1,4 +1,4 @@
-package com.fireservice.model;
+package com.bookshop.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

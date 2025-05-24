@@ -1,7 +1,7 @@
-package com.fireservice.controller;
+package com.bookshop.controller;
 
-import com.fireservice.model.User;
-import com.fireservice.service.UserService;
+import com.bookshop.model.User;
+import com.bookshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
