@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
-<h2>Заказы</h2>
+<h2 sec:authorize="hasRole('USER')">Ваши заказы</h2>
+<h2 sec:authorize="hasRole('ADMIN')">Заказы всех пользователей</h2>
 
 <a th:href="@{/home}" class="btn">Главная</a>
 
@@ -33,7 +34,6 @@
         <td th:text="${order.orderDateString}"></td>
         <td th:text="${order.status}"></td>
         <td>
-            <!-- Кнопка редактирования доступна только администраторам -->
             <a th:href="@{|/orders/edit/${order.id}|}" sec:authorize="hasRole('ADMIN')">Редактировать</a>
         </td>
     </tr>
