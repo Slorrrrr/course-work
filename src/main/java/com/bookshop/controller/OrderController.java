@@ -1,10 +1,13 @@
 package com.bookshop.controller;
 
 import com.bookshop.model.Order;
+import com.bookshop.model.User;
+import com.bookshop.service.CustomUserDetails;
 import com.bookshop.service.OrderService;
 import com.bookshop.service.BookService;
 import com.bookshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +29,30 @@ public class OrderController {
     private UserService userService;
 
     @GetMapping
-    public String getAllOrders(Model model) {
-        List<Order> orders = orderService.getAllOrders();
+    public String getAllOrders(Model model, Authentication authentication) {
+        List<Order> orders;
+
+        boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
+            orders = orderService.getAllOrders();
+        } else {
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            User user = customUserDetails.getUser();
+            orders = orderService.getOrdersByUserId(user.getId());
+        }
+
         orders.forEach(o -> {
             if (o.getOrderDate() != null) {
-                // Например, форматируем дату в строку в нужном формате
                 o.setOrderDateString(o.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
             }
         });
+
         model.addAttribute("orders", orders);
         return "orders/list"; // Thymeleaf шаблон orders/list.html
     }
+
 
     @GetMapping("/add")
     public String showAddForm(Model model) {

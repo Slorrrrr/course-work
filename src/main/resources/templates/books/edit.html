@@ -7,8 +7,6 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: main-header"></div>
-
 <h2>Редактировать книгу</h2>
 
 <form th:action="@{|/books/edit/${book.id}|}" th:object="${book}" method="post">
