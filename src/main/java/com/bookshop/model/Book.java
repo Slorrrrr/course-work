@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -89,5 +90,11 @@ public class Book {
 
     public void setStores(Set<Store> stores) {
         this.stores = stores;
+    }
+
+    public String getStoresNames() {
+        return stores.stream()
+                .map(Store::getName)
+                .collect(Collectors.joining(", "));
     }
 }
