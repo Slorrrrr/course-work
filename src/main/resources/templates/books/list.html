@@ -6,6 +6,23 @@
     <meta charset="UTF-8" />
     <title>Список книг</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        /* Белый цвет текста для заголовков */
+        th {
+            color: white;
+        }
+
+        /* Белый цвет для текста ссылок в заголовках */
+        th a {
+            color: white;
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+
+        /* Изменение цвета стрелочек для сортировки */
+        th a:hover {
+            color: #ccc; /* Серая подсветка при наведении */
+        }
+    </style>
 </head>
 <body>
 
@@ -20,11 +37,36 @@
 <table border="1">
     <thead>
     <tr>
-        <th>Название</th>
-        <th>Автор</th>
-        <th>Категория</th>
-        <th>Цена</th>
-        <th>На складе</th>
+        <th>
+            <a th:href="@{/books(sortField='title', sortDir=${sortField == 'title' ? reverseSortDir : 'asc'})}">
+                Название
+                <span th:if="${sortField == 'title'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/books(sortField='author', sortDir=${sortField == 'author' ? reverseSortDir : 'asc'})}">
+                Автор
+                <span th:if="${sortField == 'author'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/books(sortField='category', sortDir=${sortField == 'category' ? reverseSortDir : 'asc'})}">
+                Категория
+                <span th:if="${sortField == 'category'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/books(sortField='price', sortDir=${sortField == 'price' ? reverseSortDir : 'asc'})}">
+                Цена
+                <span th:if="${sortField == 'price'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/books(sortField='stock', sortDir=${sortField == 'stock' ? reverseSortDir : 'asc'})}">
+                На складе
+                <span th:if="${sortField == 'stock'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
         <th>Магазины</th>
         <th sec:authorize="hasRole('ADMIN')">Действия</th>
     </tr>

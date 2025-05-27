@@ -25,9 +25,19 @@ public class BookController {
 
     // Список всех книг
     @GetMapping
-    public String listBooks(Model model) {
-        List<Book> books = bookService.getAllBooks();
+    public String listBooks(
+            @RequestParam(defaultValue = "title") String sortField,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            Model model) {
+
+        List<Book> books = bookService.getAllBooksSorted(sortField, sortDir);
         model.addAttribute("books", books);
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        // Чтобы переключать направление сортировки в UI
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+
         return "books/list";
     }
 
