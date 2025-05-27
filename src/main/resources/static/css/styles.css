@@ -244,3 +244,126 @@ input[type=number].input-field {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* --- Добавляем для формы регистрации с плавающими лейблами --- */
+
+/* Контейнер формы */
+form#registerForm {
+    max-width: 400px;
+    margin: 0 auto 40px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок формы */
+form#registerForm h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Обертка для поля + label */
+.form-group {
+    position: relative;
+    margin-bottom: 28px;
+}
+
+/* Поля ввода и селекты — наследуют общий стиль input[type=text] */
+form#registerForm input[type="text"],
+form#registerForm input[type="email"],
+form#registerForm input[type="password"],
+form#registerForm select {
+    width: 100%;
+    padding: 14px 12px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: none;
+    transition: border-color 0.3s ease;
+    color: #333;
+}
+
+/* При фокусе на поле или селекте */
+form#registerForm input:focus,
+form#registerForm select:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Плавающие лейблы */
+form#registerForm label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    color: #666;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: #fff;
+    padding: 0 5px;
+    border-radius: 2px;
+}
+
+/* Анимация лейбла при заполнении или фокусе */
+form#registerForm input:focus + label,
+form#registerForm input:not(:placeholder-shown) + label,
+form#registerForm select:focus + label,
+form#registerForm select:not([value=""]) + label {
+    top: -9px;
+    left: 8px;
+    font-size: 0.8rem;
+    color: #007BFF;
+    font-weight: 600;
+}
+
+/* Ошибка валидации поля - красная рамка */
+form#registerForm input:invalid,
+form#registerForm select:invalid {
+    border-color: #dc3545;
+}
+
+/* Кнопка отправки формы */
+form#registerForm button {
+    width: 100%;
+    background-color: #6c757d;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(108, 117, 125, 0.5);
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+form#registerForm button:hover {
+    background-color: #5a6268;
+}
+
+/* Disabled кнопка */
+form#registerForm button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Placeholder пустой чтобы сработали плавающие лейблы */
+form#registerForm input::placeholder {
+    color: transparent;
+}
+
+/* Для select убрать стрелку у некоторых браузеров (опционально) */
+form#registerForm select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%227%22%20viewBox%3D%220%200%2010%207%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%207%205-7z%22%20fill%3D%22%236c757d%22/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 7px;
+}

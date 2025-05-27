@@ -1,36 +1,179 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8" />
     <title>Регистрация</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        body {
+          background-color: #f8f9fa;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          padding: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+        }
+        form {
+          background: white;
+          padding: 30px 40px;
+          border-radius: 10px;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+          width: 360px;
+        }
+        h2 {
+          text-align: center;
+          margin-bottom: 25px;
+          color: #333;
+          font-weight: 700;
+        }
+
+        .form-group {
+          position: relative;
+          margin-bottom: 25px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+          width: 100%;
+          padding: 14px 12px;
+          border: 1.8px solid #ccc;
+          border-radius: 6px;
+          font-size: 1rem;
+          background: none;
+          transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 8px rgba(0,123,255,0.3);
+        }
+
+        /* Floating label */
+        label {
+          position: absolute;
+          top: 14px;
+          left: 12px;
+          color: #666;
+          font-size: 1rem;
+          pointer-events: none;
+          transition: all 0.3s ease;
+          background: white;
+          padding: 0 4px;
+          border-radius: 2px;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label,
+        select:focus + label,
+        select:not([value=""]) + label {
+          top: -8px;
+          left: 8px;
+          font-size: 0.8rem;
+          color: #007bff;
+          font-weight: 600;
+        }
+
+        /* Button */
+        button {
+          width: 100%;
+          background-color: #007bff;
+          color: white;
+          font-size: 1.1rem;
+          font-weight: 600;
+          padding: 14px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          box-shadow: 0 5px 12px rgba(0,123,255,0.4);
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+
+        /* Validation styles */
+        input:invalid {
+          border-color: #dc3545;
+        }
+        select:invalid {
+          border-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
-<h2>Регистрация нового пользователя</h2>
-<form th:action="@{/register}" th:object="${user}" method="post">
-    <div>
-        <label for="username">Имя пользователя:</label>
-        <input type="text" id="username" th:field="*{username}" required />
+
+<form id="registerForm" th:action="@{/register}" th:object="${user}" method="post" novalidate>
+    <h2>Регистрация нового пользователя</h2>
+
+    <div class="form-group">
+        <input
+                type="text"
+                id="username"
+                th:field="*{username}"
+                required minlength="5" maxlength="20"
+                pattern="^[A-Za-z0-9_]+$"
+                placeholder=" "
+                oninvalid="this.setCustomValidity('Имя пользователя должно содержать 5-20 символов: буквы, цифры или подчёркивания.')"
+                oninput="this.setCustomValidity('')"
+        />
+        <label for="username">Имя пользователя</label>
     </div>
-    <div>
-        <label for="email">Email (необязательно):</label>
-        <input type="email" id="email" th:field="*{email}" />
+
+    <div class="form-group">
+        <input
+                type="email"
+                id="email"
+                th:field="*{email}"
+                required
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                placeholder=" "
+                oninvalid="this.setCustomValidity('Введите корректный email в формате: example@mail.com')"
+                oninput="this.setCustomValidity('')"
+        />
+        <label for="email">Email</label>
     </div>
-    <div>
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" th:field="*{password}" required />
+
+    <div class="form-group">
+        <input
+                type="password"
+                id="password"
+                th:field="*{password}"
+                required minlength="8" maxlength="30"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$"
+                placeholder=" "
+                oninvalid="this.setCustomValidity('Пароль должен содержать 8-30 символов, минимум одну заглавную букву, одну строчную, одну цифру и специальный символ.')"
+                oninput="this.setCustomValidity('')"
+        />
+        <label for="password">Пароль</label>
     </div>
-    <div>
-        <label for="role">Роль:</label>
+
+    <div class="form-group">
         <select id="role" th:field="*{role}" required>
-            <option value="ROLE_USER" selected>Пользователь</option>
-            <option value="ROLE_ADMIN">Администратор</option>
+            <option value="" disabled selected>Выберите роль</option>
+            <option value="ROLE_USER" th:selected="${user.role == 'ROLE_USER'}">Пользователь</option>
+            <option value="ROLE_ADMIN" th:selected="${user.role == 'ROLE_ADMIN'}">Администратор</option>
         </select>
+        <label for="role">Роль</label>
     </div>
-    <div>
-        <button type="submit">Зарегистрироваться</button>
-    </div>
+
+    <button type="submit">Зарегистрироваться</button>
 </form>
-<p>Уже есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      if (!this.checkValidity()) {
+        event.preventDefault();
+        this.reportValidity();
+      }
+    });
+</script>
+
 </body>
 </html>
