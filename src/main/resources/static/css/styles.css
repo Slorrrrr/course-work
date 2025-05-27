@@ -268,7 +268,7 @@ form#registerForm h2 {
 /* Обертка для поля + label */
 .form-group {
     position: relative;
-    margin-bottom: 28px;
+    margin-bottom: 7px;
 }
 
 /* Поля ввода и селекты — наследуют общий стиль input[type=text] */

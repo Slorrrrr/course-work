@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
-<footer th:fragment="main-footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>О нас</h4>
-            <p>Книжный магазин с 2024 года. Лучший выбор литературы.</p>
+<footer th:fragment="main-footer" style="background-color: #6c757d; color: white; padding: 1.5rem 2rem;">
+    <div style="
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+  ">
+        <div style="flex: 1 1 280px; min-width: 280px; color: white;">
+            <h3 style="font-weight: 700; margin-bottom: 1rem; color: white;">Главный офис</h3>
+            <p style="margin: 0 0 8px; color: white;">📍 Москва, ул. Ленина, 11</p>
+            <p style="margin: 0 0 8px; color: white;">📞 +7 495 123-45-67</p>
+            <p style="margin: 0 0 8px; color: white;">✉️ info@bookstore.ru</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #d1d3d6;">© 2025 BookStore. Все права защищены.</p>
         </div>
-        <div class="footer-section">
-            <h4>Контакты</h4>
-            <p>📧 info@bookstore.ru</p>
-            <p>📞 +7 (495) 123-45-67</p>
+
+        <div style="flex: 1.5 1 500px; min-width: 280px; color: white;">
+            <h3 style="font-weight: 700; margin-bottom: 1rem; color: white;">Наш офис на карте</h3>
+            <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2253.3643894019237!2d37.19942607676856!3d55.61307500274489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b556d8e3ee2bc5%3A0xd544bfc317f534bd!2z0YPQuy4g0JvQtdC90LjQvdCwLCAxMSwg0KLQvtC70YHRgtC-0L_QsNC70YzRhtC10LLQviwg0JzQvtGB0LrQstCwLCAxNDMzNTA!5e0!3m2!1sru!2sru!4v1748381725123!5m2!1sru!2sru"
+                    width="100%" height="280"
+                    style="border:0; border-radius: 8px;"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
-        <div class="footer-section">
-            <h4>Соцсети</h4>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-vk"></i></a>
-                <a href="#"><i class="fab fa-telegram"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© 2024 BookStore. Все права защищены</p>
     </div>
 </footer>
-</body>
-</html>
