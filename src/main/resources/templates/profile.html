@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Профиль пользователя</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    /* Обертка и отступы */
+    body {
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    h2 {
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 700;
+      border-bottom: 2px solid #6c757d;
+      padding-bottom: 10px;
+    }
+    section {
+      background: #fff;
+      padding: 25px 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    section h3 {
+      margin-bottom: 20px;
+      color: #444;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* Личная информация */
+    section p {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    section p strong {
+      width: 150px;
+      display: inline-block;
+      color: #212529;
+    }
+
+    /* Таблица заказов */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+    thead th {
+      background-color: #6c757d;
+      color: #fff;
+      padding: 12px 15px;
+      text-align: left;
+      font-weight: 600;
+      border-radius: 6px 6px 0 0;
+    }
+    tbody td {
+      padding: 12px 15px;
+      border: 1px solid #dee2e6;
+      background-color: #f1f3f5;
+      color: #333;
+    }
+    tbody tr:nth-child(even) td {
+      background-color: #e9ecef;
+    }
+    tbody tr:hover td {
+      background-color: #d6d8db;
+    }
+    tbody tr td[colspan] {
+      text-align: center;
+      font-style: italic;
+      color: #777;
+      background-color: #fff3cd;
+      border-color: #ffeeba;
+    }
+
+    /* Контейнер диаграмм */
+    .charts-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+    }
+
+    .chart-wrapper {
+      flex: 1 1 300px; /* минимальная ширина 300px, гибкая */
+      max-width: 100%;
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+
+    .chart-wrapper h4 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .chart-wrapper canvas {
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 1 / 1; /* квадратная диаграмма */
+      max-height: 300px;
+    }
+
+    /* Адаптивность для маленьких экранов */
+    @media (max-width: 650px) {
+      .charts-container {
+        flex-direction: column;
+      }
+      .chart-wrapper {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div th:replace="fragments/header :: main-header"></div>
+
+<h2>Ваш профиль</h2>
+
+<section>
+  <h3>Личная информация</h3>
+  <p><strong>Имя:</strong> <span th:text="${user.username}"></span></p>
+  <p><strong>Email:</strong> <span th:text="${(user.email != null and !#strings.isEmpty(user.email.trim())) ? user.email : 'не указан'}"></span></p>
+  <p><strong>Роль:</strong> <span th:text="${user.role}"></span></p>
+</section>
+
+<section>
+  <h3>Ваши заказы</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Книга</th>
+      <th>Автор</th>
+      <th>Категория</th>
+      <th>Количество</th>
+      <th>Дата заказа</th>
+      <th>Статус</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.book != null ? order.book.title : '–'}"></td>
+      <td th:text="${order.book != null ? order.book.author : '–'}"></td>
+      <td th:text="${order.book != null ? order.book.category : '–'}"></td>
+      <td th:text="${order.quantity}"></td>
+      <td th:text="${order.orderDateString}"></td>
+      <td th:text="${order.status}"></td>
+    </tr>
+    <tr th:if="${orders.size() == 0}">
+      <td colspan="6">У вас пока нет заказов</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Статистика заказов</h3>
+  <div class="charts-container">
+    <div class="chart-wrapper">
+      <h4>По категориям</h4>
+      <canvas id="categoryChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+      <h4>По авторам</h4>
+      <canvas id="authorChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- Подключаем Chart.js из CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+
+  // Получаем данные из модели и конвертируем их в JS объекты
+  const categoryStats = /*[[${categoryStats}]]*/ {};
+  const authorStats = /*[[${authorStats}]]*/ {};
+
+  // Функция для генерации случайного цвета в формате rgba
+  function getRandomColor() {
+    const r = Math.floor(Math.random()*256);
+    const g = Math.floor(Math.random()*256);
+    const b = Math.floor(Math.random()*256);
+    return `rgba(${r},${g},${b},0.7)`;
+  }
+
+  // Генерируем цвета для каждой категории и автора
+  const categoryColors = Object.keys(categoryStats).map(() => getRandomColor());
+  const authorColors = Object.keys(authorStats).map(() => getRandomColor());
+
+  // Создаем круговую диаграмму по категориям
+  const ctxCategory = document.getElementById('categoryChart').getContext('2d');
+  const categoryChart = new Chart(ctxCategory, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(categoryStats),
+      datasets: [{
+        label: 'Количество заказов',
+        data: Object.values(categoryStats),
+        backgroundColor: categoryColors,
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'right' },
+        tooltip: { enabled: true }
+      }
+    }
+  });
+
+  // Создаем круговую диаграмму по авторам
+  const ctxAuthor = document.getElementById('authorChart').getContext('2d');
+  const authorChart = new Chart(ctxAuthor, {
+    type: 'pie',
+    data: {
+      labels: Object.keys(authorStats),
+      datasets: [{
+        label: 'Количество заказов',
+        data: Object.values(authorStats),
+        backgroundColor: authorColors,
+        borderColor: '#fff',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'right' },
+        tooltip: { enabled: true }
+      }
+    }
+  });
+
+  /*]]>*/
+</script>
+
+</body>
+</html>

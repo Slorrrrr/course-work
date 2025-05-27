@@ -43,15 +43,17 @@ public class OrderController {
             orders = orderService.getOrdersByUserId(user.getId());
         }
 
-        orders.forEach(o -> {
-            if (o.getOrderDate() != null) {
-                o.setOrderDateString(o.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
-            }
-        });
+        // Убираем этот код, он не нужен:
+        // orders.forEach(o -> {
+        //     if (o.getOrderDate() != null) {
+        //         o.setOrderDateString(o.getOrderDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+        //     }
+        // });
 
         model.addAttribute("orders", orders);
         return "orders/list"; // Thymeleaf шаблон orders/list.html
     }
+
 
 
     @GetMapping("/add")

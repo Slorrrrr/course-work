@@ -2,6 +2,7 @@ package com.bookshop.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "orders")
@@ -26,7 +27,7 @@ public class Order {
     private LocalDateTime orderDate = LocalDateTime.now();
 
     @Column(nullable = false)
-    private String status = "PENDING";  // PENDING, APPROVED, REJECTED, COMPLETED и т.п.
+    private String status = "PENDING";
 
     public Long getId() {
         return id;
@@ -76,9 +77,12 @@ public class Order {
         this.status = status;
     }
 
+    // Убираем поле orderDateString и делаем метод-геттер с аннотацией @Transient
     @Transient
-    private String orderDateString;
-
-    public String getOrderDateString() { return orderDateString; }
-    public void setOrderDateString(String s) { this.orderDateString = s; }
+    public String getOrderDateString() {
+        if (orderDate != null) {
+            return orderDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        }
+        return "";
+    }
 }

@@ -72,7 +72,7 @@ textarea:focus {
 }
 
 /* Кнопки */
-button {
+button, .btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #6c757d; /* Серый фон */
@@ -85,12 +85,15 @@ button {
     cursor: pointer;
     border: none;
     font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-button:hover {
+button:hover, .btn:hover {
     background-color: #5a6268; /* Темнее при наведении */
 }
 
+/* Таблицы (универсальный стиль для профиля и списка книг) */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -98,26 +101,23 @@ table {
     border: 1px solid #d1d3d6;
     border-radius: 8px;
     overflow: hidden;
+    font-size: 1rem;
 }
 
 th, td {
     padding: 12px 15px;
     border: 1px solid #d1d3d6;
     background-color: #f1f3f5; /* Более светлый серый */
-}
-
-th {
-    background-color: #6c757d; /* Серый */
-    color: white;
-    font-weight: 600;
+    color: #333;
     text-align: left;
 }
 
-tbody tr:hover td {
-    background-color: #e9ecef; /* Светло-серый при наведении */
+thead th {
+    background-color: #6c757d; /* Серый */
+    color: white;
+    font-weight: 600;
 }
 
-/* Чтобы скругления были у верхних и нижних углов */
 thead th:first-child {
     border-top-left-radius: 8px;
 }
@@ -132,6 +132,25 @@ tbody tr:last-child td:first-child {
 
 tbody tr:last-child td:last-child {
     border-bottom-right-radius: 8px;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: #e9ecef;
+}
+
+tbody tr:hover td {
+    background-color: #d6d8db;
+}
+
+/* Ссылки в таблицах */
+tbody td a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+tbody td a:hover {
+    text-decoration: underline;
 }
 
 /* Навигация */
@@ -174,25 +193,7 @@ tbody tr:last-child td:last-child {
     border: 1px solid #f5c6cb;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #6c757d; /* Серый фон */
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    box-shadow: 0 2px 6px rgba(108, 117, 125, 0.5);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.btn:hover {
-    background-color: #5a6268; /* Темнее при наведении */
-}
-
+/* Поля ввода */
 .input-field {
     width: 100%;
     padding: 10px 12px;
@@ -213,6 +214,7 @@ tbody tr:last-child td:last-child {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+/* Убираем стрелочки у числовых input */
 input[type=number].input-field::-webkit-inner-spin-button,
 input[type=number].input-field::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -223,38 +225,22 @@ input[type=number].input-field {
     -moz-appearance: textfield;
 }
 
-input[type=number].input-field {
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-select.input-field {
-    background-image: none !important;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    color: #333;
-}
-
-select.input-field:focus {
-    outline: none;
-    border-color: #007BFF; /* Синий при фокусе */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
+/* Сообщение об ошибке */
 .error-message {
-    display: block;                /* занимает всю строку, но будет перенос */
-    width: fit-content;            /* ширина по содержимому */
+    display: block;
+    width: fit-content;
     padding: 10px 10px;
     background-color: #f8d7da;
     color: #842029;
     border: 1px solid #f5c2c7;
     border-radius: 4px;
     font-weight: 600;
-    margin: 10px 0 20px 0;        /* отступ сверху 10px, снизу 20px */
+    margin: 10px 0 20px 0;
     box-shadow: 0 2px 4px rgba(255, 0, 0, 0.1);
 }
 
+/* Добавлено: Стили для кнопок с ролью */
+.btn[disabled], button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
