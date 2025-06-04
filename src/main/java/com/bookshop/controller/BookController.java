@@ -1,8 +1,10 @@
 package com.bookshop.controller;
 
 import com.bookshop.model.Book;
+import com.bookshop.model.Category;
 import com.bookshop.model.Store;
 import com.bookshop.service.BookService;
+import com.bookshop.service.CategoryService;
 import com.bookshop.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,9 @@ public class BookController {
     @Autowired
     private StoreService storeService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     // Список всех книг
     @GetMapping
     public String listBooks(
@@ -35,7 +40,6 @@ public class BookController {
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        // Чтобы переключать направление сортировки в UI
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         return "books/list";
@@ -45,17 +49,27 @@ public class BookController {
     public String showAddBookForm(Model model) {
         model.addAttribute("book", new Book());
         model.addAttribute("stores", storeService.getAllStores());
+        model.addAttribute("categories", categoryService.getAllCategories()); // добавляем категории
         return "books/add";
     }
 
     @PostMapping("/add")
-    public String addBook(@ModelAttribute Book book, @RequestParam(required = false) List<Long> storeIds) {
+    public String addBook(@ModelAttribute Book book,
+                          @RequestParam(required = false) List<Long> storeIds,
+                          @RequestParam Long categoryId) {
+
+        // Устанавливаем магазины
         if (storeIds != null) {
             Set<Store> stores = new HashSet<>(storeService.getStoresByIds(storeIds));
             book.setStores(stores);
         } else {
             book.setStores(new HashSet<>());
         }
+
+        // Устанавливаем категорию
+        Category category = categoryService.getCategoryById(categoryId);
+        book.setCategory(category);
+
         bookService.saveBook(book);
         return "redirect:/books";
     }
@@ -64,17 +78,31 @@ public class BookController {
     public String showEditForm(@PathVariable Long id, Model model) {
         Book book = bookService.getBookById(id);
         model.addAttribute("book", book);
-        model.addAttribute("stores", storeService.getAllStores()); // список магазинов для выбора
-        return "books/edit"; // имя шаблона Thymeleaf для редактирования
+        model.addAttribute("stores", storeService.getAllStores());
+        model.addAttribute("categories", categoryService.getAllCategories()); // добавляем категории
+        return "books/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateBook(@PathVariable Long id, @ModelAttribute Book book, @RequestParam(required = false) List<Long> storeIds) {
+    public String updateBook(@PathVariable Long id,
+                             @ModelAttribute Book book,
+                             @RequestParam(required = false) List<Long> storeIds,
+                             @RequestParam Long categoryId) {
+
         book.setId(id);
+
+        // Обновляем магазины
         if (storeIds != null) {
             Set<Store> stores = new HashSet<>(storeService.getStoresByIds(storeIds));
             book.setStores(stores);
+        } else {
+            book.setStores(new HashSet<>());
         }
+
+        // Обновляем категорию
+        Category category = categoryService.getCategoryById(categoryId);
+        book.setCategory(category);
+
         bookService.saveBook(book);
         return "redirect:/books";
     }

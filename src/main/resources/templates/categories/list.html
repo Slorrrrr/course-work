@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity"
+      lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Список категорий</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+        th {
+            color: white;
+        }
+        th a {
+            color: white;
+            text-decoration: none;
+        }
+        th a:hover {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<h2>Список категорий</h2>
+
+<a th:href="@{/}" class="btn">Главная</a>
+<a th:href="@{/categories/add}" class="btn" sec:authorize="hasRole('ADMIN')">Добавить категорию</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>
+            <a th:href="@{/categories(sortField='name', sortDir=${sortField == 'name' ? reverseSortDir : 'asc'})}">
+                Название
+                <span th:if="${sortField == 'name'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+            </a>
+        </th>
+        <th sec:authorize="hasRole('ADMIN')">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categories}">
+        <td th:text="${category.name}"></td>
+        <td sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{|/categories/edit/${category.id}|}">Редактировать</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Добавить категорию</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: main-header}"></div>
+
+<h2>Добавить категорию</h2>
+
+<form th:action="@{/categories/add}" th:object="${category}" method="post">
+  <div>
+    <label>Название:</label>
+    <input type="text" th:field="*{name}" class="input-field" required />
+  </div>
+  <button type="submit" class="btn">Сохранить</button>
+</form>
+
+<a th:href="@{/categories}">Назад к списку категорий</a>
+
+</body>
+</html>

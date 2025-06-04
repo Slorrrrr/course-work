@@ -8,6 +8,6 @@ public class AboutController {
 
     @GetMapping("/about")
     public String about() {
-        return "about"; // Имя Thymeleaf шаблона (about.html)
+        return "about";
     }
 }

@@ -40,10 +40,10 @@ public class ProfileController {
         // Получаем заказы пользователя
         List<Order> orders = orderService.getOrdersByUserId(user.getId());
 
-        // Статистика по категориям
+        // Статистика по категориям (по имени категории)
         Map<String, Long> categoryStats = orders.stream()
                 .filter(o -> o.getBook() != null && o.getBook().getCategory() != null)
-                .collect(Collectors.groupingBy(o -> o.getBook().getCategory(), Collectors.counting()));
+                .collect(Collectors.groupingBy(o -> o.getBook().getCategory().getName(), Collectors.counting()));
 
         // Статистика по авторам
         Map<String, Long> authorStats = orders.stream()

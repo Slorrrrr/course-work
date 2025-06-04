@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8" />
     <title>Редактировать книгу</title>
@@ -22,7 +22,14 @@
     </div>
     <div>
         <label>Категория:</label>
-        <input type="text" th:field="*{category}" class="input-field" />
+        <select th:field="*{category}" class="input-field" required>
+            <option value="" disabled th:selected="${book.category == null}">Выберите категорию</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"
+                    th:selected="${book.category != null} ? ${cat.id == book.category.id} : false">
+            </option>
+        </select>
     </div>
     <div>
         <label>Цена:</label>

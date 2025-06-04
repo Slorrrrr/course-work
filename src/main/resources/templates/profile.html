@@ -149,7 +149,7 @@
     <tr th:each="order : ${orders}">
       <td th:text="${order.book != null ? order.book.title : '–'}"></td>
       <td th:text="${order.book != null ? order.book.author : '–'}"></td>
-      <td th:text="${order.book != null ? order.book.category : '–'}"></td>
+      <td th:text="${order.book.category != null ? order.book.category.name : '-'}"></td>
       <td th:text="${order.quantity}"></td>
       <td th:text="${order.orderDateString}"></td>
       <td th:text="${order.status}"></td>
